@@ -1,0 +1,334 @@
+views.py
+
+from .models import Appointment
+
+
+class AppointmentView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'news/make_appointment.html', {})
+
+    def post(self, request, *args, **kwargs):
+        appointment = Appointment(
+            date=datetime.strptime(request.POST['date'], '%Y-%m-%d'),
+            client_name=request.POST['client_name'],
+            message=request.POST['message'],
+        )
+        appointment.save()
+        return redirect('/news')
+
+
+class Mailing(UpdateView):
+    model = Category
+    template_name = 'post_detail.html'
+    context_object_name = 'Category'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'post_detail.html', {})
+
+    def post(self, request, *args, **kwargs):
+        current_user = self.request.user
+        current_category = self.request.category
+        subscriber = Category(
+            subscribers=current_user.username,
+            name_of_category=current_category,
+        )
+        id = self.kwargs.get('pk')
+        Category.objects.get(pk=id).subscribers.add(current_user)
+        subscriber.save()
+        html_content = render_to_string(
+            'subscription_created.html',
+            {
+                'subscriber': subscriber,
+            }
+        )
+        # msg = EmailMultiAlternatives(
+        #     subject=f'{subscriber.subscribers.username}',
+        #     body=subscriber.name_of_category,
+        #     from_email='bobby.loner27@gmail.com',
+        #     to=[subscriber.subscribers.email]
+        # )
+        # msg.attach_alternative(html_content, "text/html")
+        # msg.send()
+
+        return redirect('news/search')
+#
+# class CategorySubscribeView(UpdateView):
+#     model = Category  # указываем модель, объекты которой мы будем выводить
+#     queryset = Category.objects.order_by('-id')
+#     template_name = 'subscribe.html'  # указываем имя шаблона, в котором будет лежать html,
+#     # в котором будут все инструкции о том, как именно пользователю должны вывестись наши объекты
+#     context_object_name = 'category'  # это имя списка, в котором будут лежать все объекты,
+#
+#     def get_object(self, **kwargs):
+#         id = self.kwargs.get('pk')
+#         return Category.objects.get(pk=id)
+#
+#     def get(self, request, *args, **kwargs):
+#         return render(request, 'news/post_detail.html', {})
+#
+#     def post(self, request, *args, **kwargs):
+#         id = self.kwargs.get('pk')
+#         current_user = self.request.user
+#         current_category = self.request.category_name
+#         subscription = Category(
+#             subscriber=current_user.username, category_name=current_category
+#         )
+#         subscription.save()
+#         # получем наш html
+#         html_content = render_to_string(
+#             'subscription_created.html',
+#             {
+#                 'subscription': subscription,
+#             }
+#         )
+#         # отправляем письмо
+#         msg = EmailMultiAlternatives(
+#             subject=f'{subscription.subscribers.username}',
+#             # имя клиента будет в теме для удобства
+#             body=subscription.category_name,  # сообщение с кратким описанием проблемы
+#             from_email='bobby.loner27@gmail.com',  # здесь указываете почту, с которой будете отправлять
+#             to=[subscription.subscribers.email]  # здесь список получателей. Например, секретарь, сам врач и т. д.
+#         )
+#         msg.attach_alternative(html_content, "text/html")  # добавляем html
+#         msg.send()  # отсылаем
+#         Category.objects.get(pk=id).subscriber.add(current_user)
+#         return redirect('news/search/id')
+
+models.py
+class Appointment(models.Model):
+    date = models.DateTimeField(default=datetime.utcnow,)
+    client_name = models.CharField(max_length=200)
+    message = models.TextField()
+
+    def __str__(self):
+        return f'{self.client_name}: {self.message}'
+
+signals.py
+
+from .models import Appointment, Category
+from django.db.models.signals import post_save, post_delete
+from django.core.mail import mail_managers
+from django.dispatch import receiver
+from django.core.mail import EmailMultiAlternatives
+
+
+@receiver(post_save, sender=Appointment)
+def notify_managers_appointment(sender, instance, created, **kwargs):
+    if created:
+        subject = f'{instance.client_name} {instance.date.strftime("%d %m %Y")}',
+
+    else:
+        subject = f'Что-то поменялось в записи {instance.client_name} {instance.date.strftime("%d %m %Y")}',
+    mail_managers(
+        subject=subject,
+        message=instance.message,
+    )
+
+
+@receiver(post_delete, sender=Appointment)
+def notify_managers_appointment_canceled(sender, instance, **kwargs):
+    subject = f'{instance.client_name} has canceled his appointment! '
+    mail_managers(
+        subject=subject,
+        message=f'Canceled appointment for {instance.date.strftime("%d %m %Y")}',
+    )
+    print(subject)
+
+
+@receiver(post_save, sender=Category)
+def notify_users_news(sender, instance, created, **kwargs):
+    subject = f'{instance.subscribers.username}'
+    body = instance.name_of_category,
+
+    msg = EmailMultiAlternatives(
+        subject=subject,
+        message=instance.html_content,
+        from_email='bobby.loner27@gmail.com',
+        to=[instance.subscribers.email],
+    )
+
+apps.py
+
+from django.apps import AppConfig
+
+
+class NewsConfig(AppConfig):
+    name = 'news'
+
+    def ready(self):
+        import news.signals
+
+settings
+'news.apps.NewsConfig',
+
+LOGIN_URL = login_required(login_url='/accounts/login/')
+LOGIN_REDIRECT_URL = '/news/search/'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'bobby.loner27@gmail.com'
+EMAIL_HOST_PASSWORD = 'green7688'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+MANAGERS = [
+    ('Viki', 'viki49661@gmail.com'),
+]
+SERVER_EMAIL = 'bobby.loner27@gmail.ru'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+urls.py
+   #path('test/', test, name='test'),
+    path('make_appointment/', AppointmentView.as_view(), name='make_appointment'),
+    path('<int:pk>', Mailing.as_view(), name='subscribe'),
+]
+
+forms.py
+class SubmitForm(forms.Form):
+    model= Category
+    fields = ()
+
+SUBSCRIBE.html
+{% extends 'flatpages/default.html' %}
+{% load Censor %}
+<!-- Название у нас будет news -->
+{% block title %}
+News
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все новости -->
+{% block content %}
+<h2>Новость:</h2><br>
+
+<h3> {{ post.header |censor:'***'|title }}</h3>
+<p>{{post.date_of_creation_post |date:'d M Y H:i'}}</p>
+<p>
+    {% if post.article_or_news == '1' %}
+    {{ post.post_text |censor:'***'  }}
+    {% else %}
+    {{ post.post_text |censor:'***' }}
+    {% endif %}
+</p>
+<div>
+    {% for category in post.category.all %}
+    Категория: {{ category }}
+    <button><a href="{% url 'subscribe' category.id %}" style="font-size: 11px"></a>Подписаться</button>
+{% endfor %}
+<br><div>Автор: {{ post.author.author }}</div>
+</div>
+{% endblock content %}
+
+
+SUBSCRIPTION_CREATED.HTML
+<!--{% extends 'flatpages/default.html' %}-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe</title>
+</head>
+<body>
+ <h2>Категория новостей - {{ category.id }}</h2>
+ <p> Вы, {{ subscribers.username }}, подписаны на {{ category.id }} </p>
+</body>
+</html>
+
+APPOINTMENT_CREATED.HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Добрый день {{appointment.client_name}} !</h2>
+    <h3>{{ appointment.message|truncatechars:50 }}</h3>
+    <p>{{ appointment.date|date:"d-M-Y" }}</p>
+</body>
+</html>
+
+MAKE_APPOINTMENT.HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Make an appointment</title>
+</head>
+<body>
+<h1>Make an appointment</h1>
+<form action="{% url 'make_appointment' %}" method="POST" enctype="'multipart/form-data">
+    {% csrf_token %}
+    <label for="client_name">Your name</label>
+    <input type="text" name="client_name"><br>
+    <label for="message">Message</label>
+    <input type="text" name="message"><br>
+    <label for="date">Choose time</label>
+    <input type="date" name="date"><br>
+    <input type="submit">
+</form>
+</body>
+</html>
+
+TEMPLATES/ACCOUNT/EMAIL/EMAIL_CONFIRMATION_SIGNUP_MESSAGE.HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% load account %} <!-- Загружаем тег который позволит получить нам ссылку на подтверждение -->
+    <h1>Спасибо за регистрацию {{ user.username }}!</h1>
+    <h3>Пожалуйста перейдите по этой ссылке <a href="{{ activate_url }}">the link</a> чтобы активировать вашу учетную запись</h3>
+     <!-- Всставляем ссылку на активацию -->
+</body>
+</html>
+
+
+TEMPLATES/ACCOUNT/EMAIL/EMAIL_CONFIRMATION_SUBJECT.HTML
+Skillfactory sends it's regards
+
+ADMIN.PY
+admin.site.register(Appointment)
+
+
+MODELS.py 2
+
+from NewsPaper.settings import EMAIL_HOST_USER
+
+class Mailing(UpdateView):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'subscribe.html', {})
+
+    def post(self, request, *args, **kwargs):
+        current_user = self.request.user
+        current_category = self.request.category
+        subscriber = Category(
+            subscribers=current_user.username,
+            name_of_category=current_category,
+        )
+        id = self.kwargs.get('pk')
+        Category.objects.get(pk=id).subscribers.add(current_user)
+        subscriber.save()
+        subject = request.post.header
+        message = request.post.post_text
+        recipient = subscriber.subscribers.email
+        send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently=False)
+
+        return render(request, 'letter.html')

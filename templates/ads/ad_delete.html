@@ -1,0 +1,25 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}Delete {% endblock title %}
+
+{% block content %}
+<div class="container"> 
+    <div class="row  justify-content-center">
+        <div class=" col-lg-8 mt-4  mb-5">
+        <h2 class="mb-5">Вы действительно хотите удалить объявление?</h2>
+   
+        <div class="card-body">
+            <h5 class="card-title mb-4">{{ ad.header }}</h5>
+            <p>{{ ad.content_upload|safe|truncatewords:50 }}</p>
+        </div>
+    
+ 
+
+<form method="POST">
+    {% csrf_token %}
+     <a href="{% url 'ads' %}" type="submit" class=" btn btn-outline-dark mt-2 ">Подтвердить</a>
+</form>
+</div>
+</div>
+</div>
+{% endblock content %}
