@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'ckeditor',                          # https://django-ckeditor.readthedocs.io/en/latest/
     'ckeditor_uploader',
     
-    'crispy_forms',                      # https://django-crispy-forms.readthedocs.io/en/latest/
+    'crispy_forms',
+    "crispy_bootstrap5",                      # https://django-crispy-forms.readthedocs.io/en/latest/
     'debug_toolbar',                     # https://django-debug-toolbar.readthedocs.io/en/latest/
     'django_cleanup.apps.CleanupConfig', # https://pypi.org/project/django-cleanup/
     'django.contrib.humanize',           # https://docs.djangoproject.com/en/4.0/ref/contrib/humanize/#module-django.contrib.humanize
@@ -171,10 +172,46 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 #https://docs.djangoproject.com/en/4.0/ref/settings/#media-root
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+
+
+#primary key https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#https://django-allauth.readthedocs.io/en/latest/installation.html
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
+
+#Smtp https://docs.djangoproject.com/en/4.0/ref/settings/#email-host
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = str(os.getenv('EMAIL_HOST_USER'))
+EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+#crispy-forms   https://django-crispy-forms.readthedocs.io/en/latest/
+# CRISPY_TEMPLATE_PCK = 'uni_form'
+
+#crispy-bootstrap5   https://github.com/django-crispy-forms/crispy-bootstrap5  
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+#django-channels
+ASGI_APPLICATION = "BulletinBoard.asgi.application"
+CHANNEL_LAYERS={}
+
 
 # django-ckeditor
 CKEDITOR_UPLOAD_PATH = 'uploads/'
@@ -246,33 +283,3 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
-
-
-#primary key https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-#https://django-allauth.readthedocs.io/en/latest/installation.html
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
-
-
-#Smtp https://docs.djangoproject.com/en/4.0/ref/settings/#email-host
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = str(os.getenv('EMAIL_HOST_USER'))
-EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-#https://django-crispy-forms.readthedocs.io/en/latest/
-CRISPY_TEMPLATE_PCK = 'uni_form'
-
-#django-channels
-ASGI_APPLICATION = "BulletinBoard.asgi.application"
-CHANNEL_LAYERS={}
-
-
