@@ -37,12 +37,12 @@ class Ad(models.Model):
         return f'{self.user}'
     
     
+    def get_absolute_url(self):
+        return f'/{self.id}'
+    
     class Meta:
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
-
-    def get_absolute_url(self):
-        return f'/{self.id}'
 
 
 class Category(models.Model):

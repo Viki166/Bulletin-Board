@@ -1,1 +1,6 @@
-Skillfactory sends it's regards.
+{% load i18n %}
+    {% autoescape off %}
+        {% blocktrans %} 
+            Подтвердите регистрацию
+        {% endblocktrans %}
+    {% endautoescape %}

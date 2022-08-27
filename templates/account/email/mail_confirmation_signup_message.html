@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% extends "account/email/base_message.txt" %}
+{% load account %} 
+{% load i18n %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,9 +9,14 @@
     <title>Document</title>
 </head>
 <body>
-    {% load account %} <!-- Загружаем тег который позволит получить нам ссылку на подтверждение -->
-    <h1>Thank you for registering {{ user.username }}!</h1>
-    <h3>Please follow <a href="{{ activate_url }}">the link</a> to activate your account</h3>
-     <!-- Вставляем ссылку на активацию -->
+    {% block content %}
+        {% autoescape off %}
+            {% user_display user as user_display %}\
+                {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+                    <h1>Спасибо за регистрацию!</h1>
+                    <h3>Нажмите пожалуйста на <a href="{{ activate_url }}">эту ссылку</a> для активации вашей учетной записи.</h3>
+                {% endblocktrans %}
+        {% endautoescape %}
+    {% endblock %}
 </body>
 </html>
