@@ -4,7 +4,6 @@ from django.forms import ModelForm
 
 
 class AdForm(ModelForm):
-   
     class Meta:
         model = Ad
         fields = ('header', 'content_upload', 'user', 'category','game')

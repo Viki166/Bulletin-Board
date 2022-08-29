@@ -137,6 +137,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
+
 # django-allauth-socialaccount
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -176,7 +177,6 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 #https://docs.djangoproject.com/en/4.0/ref/settings/#media-root
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-
 
 
 #primary key https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

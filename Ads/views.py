@@ -44,7 +44,7 @@ class AdCreate(CreateView):
     model = Ad
     form_class = AdForm
     template_name = 'ads/ad_create.html'
-
+    success_url = '/ads'
 
 class AdUpdateView(UpdateView):
     template_name = 'ads/ad_create.html'
