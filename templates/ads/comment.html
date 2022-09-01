@@ -1,0 +1,28 @@
+{%  extends 'flatpages/default.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}{% endblock title %}
+{% block content %}
+<section class="page-section community-page set-bg" data-setbg="{% static 'img/picture.jpg' %}">
+<div class="community-warp spad">
+<div class="container">
+{% for comment in comments %}
+
+        <ul class="community-post-list">
+            <li>
+                <div class="community-post">
+                    <div class="post-content">
+                        <p>{{ comment.text }}</p>
+                        <p>{{ comment.ad.user}}</p>
+                        <div class="post-date text-end mt-3 pe-3">{{ comment.datetime }}</div>
+                        <p class="text-end pe-3" style="color: #0dcaf0"><small class="text-white">Пользователь: </small>{{ comment.user }}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+{% endfor %}
+</div>
+</div>
+</section>
+{% endblock %}

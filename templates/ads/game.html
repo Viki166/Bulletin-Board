@@ -11,16 +11,16 @@
                     <div class="community-post">
                         <div class="post-content">
                             <h5>{{ ad.header }}</h5>
-                            <p>{{ ad.content_upload|safe|truncatewords:40}}</p>
+                            <p>{{ ad.content_upload|safe|truncatewords:50}}</p>
                             <div class="post-date">{{ ad.datetime }}</div>
                             <p class="text-end pe-3" style="color: #0dcaf0;"><small class="text-white">Игра: </small> {{ ad.game }}</p>  
                             <p class="text-end pe-3" style="color: #0dcaf0"><small class="text-white">Пользователь: </small> {{ ad.user }}</p>
-                                
+                               
     <div class="d-grid gap-2 d-md-flex justify-content-md-center">                          
-        <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_detail' ad.id %}">Подробнее</a>
-        <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_update' ad.id %}">Редактировать</a>
-        <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_delete' ad.id %}">Удалить</a>
-    </div>  
+            <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_detail' ad.id %}">Подробнее</a>
+            <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_update' ad.id %}">Редактировать</a>
+            <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_delete' ad.id %}">Удалить</a>
+    </div>
                         </div>
                     </div>
                 </li>

@@ -57,13 +57,14 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
-class Response(models.Model):
+class Comment(models.Model):
     text = models.TextField("Текст")
-    datetime = models.DateTimeField("Дата и время", auto_now_add=True)
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    ad = models.ForeignKey('Ad', on_delete=models.CASCADE)
-
+    datetime = models.DateTimeField("Дата и время", auto_now_add =True)
+    ad = models.ForeignKey('Ad', on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    def __str__(self):
+        return f'{self.user}'
     class Meta:
-        verbose_name = 'Отклик'
-        verbose_name_plural = 'Отклики'
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
 

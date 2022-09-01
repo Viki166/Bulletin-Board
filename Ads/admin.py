@@ -1,8 +1,5 @@
 from django.contrib import admin
-from .models import Users, Game, Ad, Category, Response
-
-
-
+from .models import Users, Game, Ad, Category, Comment
 
 
 
@@ -14,9 +11,8 @@ class AdAdmin(admin.ModelAdmin):
 
 
 
-
 admin.site.register(Users)
 admin.site.register(Game)
 admin.site.register(Ad, AdAdmin)
 admin.site.register(Category)
-admin.site.register(Response)
+admin.site.register(Comment)

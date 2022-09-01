@@ -42,6 +42,9 @@
                         <li><a href="#">Игры</a></li>
                         <li><a href="{% url 'ads' %}">Объявления</a> </li>
                         <li><a href="#">Книги</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'comments' %}">Комментарии</a></li>
+                        {% endif %}
                     </ul>
                 </nav> 
     </div>

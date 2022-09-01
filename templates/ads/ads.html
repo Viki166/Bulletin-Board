@@ -19,7 +19,7 @@
 <div class="container">
     <div class="d-md-flex justify-content-md-end pb-4">
     {% if user.is_authenticated %}
-       <a class="site-btn" href="{% url 'ad_create' %}">Добавить объявление</a>
+       <a class="site-btn" href="{% url 'ad_create' %}" target="_blank">Добавить объявление</a>
     {% endif %}
     </div>
    
@@ -29,7 +29,7 @@
         <div class="community-post">
             <div class="post-content">
                 <h5>{{ ad.header }}</h5>
-                <p>{{ ad.content_upload|safe|truncatewords:50}}</p>
+                <p>{{ ad.content_upload|safe|truncatewords:50 }}</p>
                 <div class="post-date mt-3">{{ ad.datetime }}</div>
                 <p class="text-end pe-3" style="color: #0dcaf0;"><small class="text-white">Игра: </small> {{ ad.game }}</p>  
                 <p class="text-end pe-3" style="color: #0dcaf0"><small class="text-white">Пользователь: </small>{{ ad.user }}</p> 

@@ -1,5 +1,6 @@
 {%  extends 'flatpages/default.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %}{% endblock %}
 {% block content %}
 <section class="page-section community-page set-bg" data-setbg="{% static 'img/picture.jpg' %}">
@@ -14,29 +15,24 @@
                             <div class="post-date mt-3">{{ ad.datetime }}</div>
                             <p class="text-end pe-3" style="color: #0dcaf0;"><small class="text-white">Игра: </small> {{ ad.game }}</p>  
                             <p class="text-end pe-3" style="color: #0dcaf0"><small class="text-white">Пользователь: </small> {{ ad.user }}</p> 
-                        <form method="POST">
-                            {% csrf_token %}
-                            {{form}}
-                        </form>
                          </div>
                          <!-- Comment -->
                     <a class="badge badge-light mt-4" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Оставить комментарий</a>
                         <div class="collapse" id="collapseExample">
-                        <div>    
-                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                            <textarea class="form-control border-secondary text-white" id="exampleFormControlTextarea1" rows="5" placeholder="Комментарий" style="background-color:transparent;"></textarea>
+                        <div>  
+                            <form action="{% url 'ad_detail' ad.id %}" method="POST">
+                                {% csrf_token %}
+                                    {{form|crispy}}
                                 <div class="d-md-flex justify-content-md-end mt-2">
                                     <button class="btn btn-outline-warning btn-sm mr-2">Отправить</button>
-                                    <button class="btn btn-outline-warning btn-sm">Отменить</button>
+                                    <button class="btn btn-outline-warning btn-sm" >Отменить</button>
                                 </div>
-
+                            </form>  
                         </div>
-                        </div>        
+                        </div> 
                     </div>
                 </li>
             </ul>
-       
-        
         </div>
     </div>
 </section>
