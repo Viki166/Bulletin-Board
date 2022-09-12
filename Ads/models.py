@@ -1,3 +1,4 @@
+from cProfile import label
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -31,8 +32,8 @@ class Ad(models.Model):
     content_upload = RichTextUploadingField("Текстовое поле", blank=True, null=True)
     datetime = models.DateTimeField("Дата и время", auto_now_add=True)
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE)
-    game = models.ForeignKey('Game', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name='Категория')
+    game = models.ForeignKey('Game', on_delete=models.CASCADE, verbose_name='Игра')
     
     def __str__(self):
         return f'{self.user}'
@@ -60,8 +61,8 @@ class Category(models.Model):
 class Comment(models.Model):
     text = models.TextField("Текст")
     datetime = models.DateTimeField("Дата и время", auto_now_add =True)
-    ad = models.ForeignKey('Ad', on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ad = models.ForeignKey('Ad', on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     def __str__(self):
         return f'{self.user}'
     class Meta:

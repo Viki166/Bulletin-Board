@@ -5,7 +5,7 @@ from .views import *
 urlpatterns = [
     path('ads/', AdsListView.as_view(), name='ads'),
     path('ads/<int:pk>/', DetailAd.as_view(), name='ad_detail'),
-    path('ads/comments/', Comment.as_view(), name = 'comments'),
+    path('ads/comments/', Comments.as_view(), name = 'comments'),
     path('ads/create/', AdCreate.as_view(), name='ad_create'),
     path('ads/<int:pk>/update/', AdUpdateView.as_view(), name='ad_update'),
     path('ads/<int:pk>/delete/', AdDeleteView.as_view(), name='ad_delete'),

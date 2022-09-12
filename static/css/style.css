@@ -157,6 +157,18 @@ ol {
 	color: #131313;
 }
 
+.site-btn a {
+	color: #131313;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: 0.3s;
+}
+
+.site-btn a:hover {
+	color: #131313;
+	border-color: #131313;
+}
+
 .cata {
 	display: inline-block;
 	text-transform: uppercase;
@@ -274,6 +286,14 @@ ol {
 .user-panel a {
 	font-size: 14px;
 	color: #131313;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: 0.3s;
+}
+.user-panel a:hover {
+color: #131313;
+border-color: #131313;
+
 }
 
 .main-menu {
@@ -1148,6 +1168,7 @@ ol {
 
 .community-post-list {
 	list-style: none;
+	padding-left: 0px;
 }
 
 .community-post-list li {

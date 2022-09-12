@@ -25,7 +25,7 @@
 </div>
 <header class="header-section">
     <div class="container">
-        <a class="site-logo" href="#"><img src="{% static 'img/logo.png' %}" alt=""></a>
+        <a class="site-logo" href="#">Logo</a>
             <div class="user-panel">
                 {% if user.is_authenticated %}
                     <a href="{% url 'account_logout' %}">Выйти</a>
@@ -43,7 +43,7 @@
                         <li><a href="{% url 'ads' %}">Объявления</a> </li>
                         <li><a href="#">Книги</a></li>
                         {% if user.is_authenticated %}
-                        <li><a href="{% url 'comments' %}">Комментарии</a></li>
+                            <li><a href="{% url 'comments' %}">Комментарии</a></li>
                         {% endif %}
                     </ul>
                 </nav> 

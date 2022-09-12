@@ -17,10 +17,14 @@
                             <p class="text-end pe-3" style="color: #0dcaf0"><small class="text-white">Пользователь: </small> {{ ad.user }}</p>
                                
     <div class="d-grid gap-2 d-md-flex justify-content-md-center">                          
+        {% if user == ad.user.user %}
             <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_detail' ad.id %}">Подробнее</a>
             <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_update' ad.id %}">Редактировать</a>
             <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_delete' ad.id %}">Удалить</a>
-    </div>
+        {% else %}
+            <a class="btn btn-outline-warning btn-sm" href="{% url 'ad_detail' ad.id %}">Подробнее</a>
+        {% endif %}
+        </div>
                         </div>
                     </div>
                 </li>

@@ -17,9 +17,9 @@
 <section class="page-section community-page set-bg" data-setbg="{% static 'img/picture.jpg' %}">
 <div class="community-warp spad">
 <div class="container">
-    <div class="d-md-flex justify-content-md-end pb-4">
+    <div class="btn-ad d-md-flex justify-content-md-end pb-4">
     {% if user.is_authenticated %}
-       <a class="site-btn" href="{% url 'ad_create' %}" target="_blank">Добавить объявление</a>
+       <button class="site-btn"><a href="{% url 'ad_create' %}" target="_blank">Добавить объявление</a></button>
     {% endif %}
     </div>
    

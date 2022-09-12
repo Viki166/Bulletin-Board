@@ -103,8 +103,9 @@ ol {
 }
 
 .spad {
-	padding-top: 30px;
-	padding-bottom: 30px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	
 }
 
 .text-white h1,
@@ -273,6 +274,11 @@ ol {
 .user-panel a {
 	font-size: 14px;
 	color: #131313;
+}
+.user-panel a:hover {
+text-decoration: none;
+color: #131313;
+transition: all 0.3s ease-in-out;
 }
 
 .main-menu {
@@ -880,9 +886,11 @@ ol {
 	font-weight: 400;
 }
 
+
 .site-pagination {
-	padding-top: 50px;
 	text-align: center;
+	padding-top: 30px;
+	margin: 0;
 }
 
 .site-pagination a,
@@ -897,11 +905,12 @@ ol {
 	border-radius: 50%;
 	color: #131313;
 	margin-right: 10px;
+	text-decoration: none;
 }
 
-.site-pagination .active {
-	background: #ffb320;
-}
+.site-pagination a:hover {
+	color: inherit;
+} 
 .site-pagination .link {
 	width: 65px;
 	padding-top: 5px;
@@ -910,14 +919,16 @@ ol {
 	width: 90px !important;
 }
 
-.site-pagination.sp-style-2 a,
-.site-pagination .sp-style-2 .link,
-.site-pagination.sp-style-2 span {
+.sp-style-2 a,
+.sp-style-2 .link,
+.sp-style-2 span {
 	background: #e5e5e5;
 }
-
-.site-pagination.sp-style-2 .active {
-	background: #ffb320;
+.sp-style-2 a:hover,
+.sp-style-2 .link:hover,
+.sp-style-2 span:hover {
+	background: inherit;
+	transition: all 0.3s ease-in-out;
 }
 
 .widget-item {
@@ -1134,10 +1145,6 @@ ol {
   Community page
 --------------------*/
 
-.community-page .site-pagination {
-	padding-top: 62px;
-}
-
 .community-warp {
 	max-width: 1367px;
 	margin: 0 auto;
@@ -1146,6 +1153,7 @@ ol {
 
 .community-post-list {
 	list-style: none;
+	padding-left: 0px;
 }
 
 .community-post-list li {
@@ -1161,9 +1169,9 @@ ol {
 	height: 63px;
 	border-radius: 50%;
 	float: left;
-} */
+}
 
-/* .community-post-list .community-post .post-content {
+.community-post-list .community-post .post-content {
 	padding-left: 100px;
 } */
 
