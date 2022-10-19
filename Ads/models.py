@@ -1,9 +1,6 @@
-from cProfile import label
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
-import uuid
-
 
 
 class Users(models.Model):
@@ -36,7 +33,7 @@ class Ad(models.Model):
     game = models.ForeignKey('Game', on_delete=models.CASCADE, verbose_name='Игра')
     
     def __str__(self):
-        return f'{self.user}'
+        return f'{self.header}'
     
     
     def get_absolute_url(self):
@@ -58,13 +55,20 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
+
 class Comment(models.Model):
     text = models.TextField("Текст")
     datetime = models.DateTimeField("Дата и время", auto_now_add =True)
-    ad = models.ForeignKey('Ad', on_delete=models.CASCADE)
+    ad = models.ForeignKey('Ad', on_delete=models.CASCADE, verbose_name='Объявление')
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    active = models.BooleanField("Видимость статьи", default=False)
+    like = models.ManyToManyField(Users,blank=True, related_name ='comment_likes')
+    dislike = models.ManyToManyField(Users, blank=True, related_name='comment_dislikes')
+
+
     def __str__(self):
         return f'{self.user}'
+    
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'

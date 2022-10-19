@@ -17,18 +17,56 @@
                             <p class="text-end pe-3" style="color: #0dcaf0"><small class="text-white">Пользователь: </small> {{ ad.user }}</p> 
                          </div>
                          <!-- Comment -->
-                    <a class="badge badge-light mt-4" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Оставить комментарий</a>
+                    <a class="badge badge-light mt-4" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Оставить комментарий</a> 
                         <div class="collapse" id="collapseExample">
-                        <div>  
-                            <form action="{% url 'ad_detail' ad.id %}" method="POST">
-                                {% csrf_token %}
-                                    {{form|crispy}}
-                                <div class="d-md-flex justify-content-md-end mt-2">
-                                    <button class="btn btn-outline-warning btn-sm mr-2">Отправить</button>
-                                    <button class="btn btn-outline-warning btn-sm" >Отменить</button>
+                            {% if user.is_authenticated %} 
+                                <div class="mb-4">  
+                                    <form action="{% url 'ad_detail' ad.id %}" method="POST">
+                                        {% csrf_token %}
+                                            {{form|crispy}}
+                                        <div class="d-md-flex justify-content-md-end mt-1">
+                                            <button class="btn btn-outline-warning btn-sm mr-2">Отправить</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>  
+                                {% else %}
+                                    <p class="ml-2 mt-2">Авторизуйтесь, чтобы оставить комментарий.</p>
+                                {% endif %}
+
+                        <div class="widget-item">
+                            <h4 class="widget-title">Комментарии</h4>
+                                {% for comment in comments %}
+                                    {% if ad.id == comment.ad.id and comment.active %}
+                                    <div class="top-comment">
+                                        <div class="tc-item"> 
+                                            <div class="tc-content">
+                                                <p><a href="#">{{comment.user}}</a></p>
+                                                <p>{{comment.text}}</p>
+                                                <div class="tc-date text-end">{{ comment.datetime }}</div>
+                                            
+                                            <form action="{% url 'comment-like' comment.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="next" value="{{request.path}}">
+                                                <button class="btn btn-outline-warning btn-sm" type="submit" >like
+                                                    {{ comment.likes.all.count }}
+                                                </button>
+                                            </form>
+                                            <form action="{% url 'comment-dislike' comment.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="next" value="{{request.path}}">
+                                                <button class="btn btn-outline-warning btn-sm" type="submit" >dislike
+                                                    {{ comment.dislikes.all.count }}
+                                                </button>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
                         </div>
+
+                        
+                        
                         </div> 
                     </div>
                 </li>

@@ -813,16 +813,16 @@ border-color: #131313;
 	overflow: hidden;
 }
 
-.top-comment .tc-item .tc-thumb {
+/* .top-comment .tc-item .tc-thumb {
 	width: 63px;
 	height: 63px;
 	border-radius: 50%;
 	float: left;
-}
+} */
 
-.top-comment .tc-item .tc-content {
+/* .top-comment .tc-item .tc-content {
 	padding-left: 100px;
-}
+} */
 
 .top-comment .tc-item .tc-content p {
 	font-size: 12px;
@@ -956,11 +956,12 @@ border-color: #131313;
 
 .widget-item .widget-title {
 	margin-bottom: 40px;
+	color: #eff2f5;
 }
 
 .widget-item .latest-blog .lb-item .lb-content p,
 .widget-item .top-comment .tc-item .tc-content p {
-	color: #131313;
+	color: #fff;
 }
 
 .widget-item .latest-blog .lb-item .lb-content .lb-author {

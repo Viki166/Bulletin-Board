@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'Ads.apps.AdsConfig',                # https://docs.djangoproject.com/en/4.0/ref/applications/#application-configuration
-    
+    'News.apps.NewsConfig',
     'allauth',                           # https://django-allauth.readthedocs.io/en/latest/installation.html
     'allauth.account',
     'allauth.socialaccount',
@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'debug_toolbar',                     # https://django-debug-toolbar.readthedocs.io/en/latest/
     'django_cleanup.apps.CleanupConfig', # https://pypi.org/project/django-cleanup/
     'django.contrib.humanize',           # https://docs.djangoproject.com/en/4.0/ref/contrib/humanize/#module-django.contrib.humanize
+    'django_filters',
     #'channels',                          # https://channels.readthedocs.io/en/stable/installation.html
     
 ]

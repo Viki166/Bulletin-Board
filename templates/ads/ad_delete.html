@@ -10,14 +10,16 @@
    
         <div class="card-body">
             <h5 class="card-title mb-4">{{ ad.header }}</h5>
-            <p>{{ ad.content_upload|safe|truncatewords:50 }}</p>
+            <p>{{ ad.content_upload|safe }}</p>
         </div>
     
  
 
-<form method="POST">
+<form method="POST" action="">
     {% csrf_token %}
-     <a href="{% url 'ads' %}" type="submit" class=" btn btn-outline-dark mt-2 ">Подтвердить</a>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">                          
+            <button class=" btn btn-outline-dark mt-2 ">Подтвердить</button>
+        </div>
 </form>
 </div>
 </div>

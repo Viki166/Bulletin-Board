@@ -6,23 +6,69 @@
 <section class="page-section community-page set-bg" data-setbg="{% static 'img/pict.jpg' %}">
 <div class="community-warp spad">
 <div class="container">
-{% for comment in comments %}
+    <div class="btn-ad d-md-flex justify-content-md-end mr-4">
+        <a class="badge badge-light mb-4 p-2 " type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Фильтр</a>
+    </div>
+    
+    <div class="collapse" id="collapseExample">
+    <div>  
+        
+        <form class="mb-4" action="" method="GET">
+            {{filter.form|crispy}}
+            <div class="btn-ad d-md-flex justify-content-md-start">
+                <button class=" btn btn-warning btn-sm ml-2">Найти</button>
+            </div>
+        </form> 
+      
+    </div>
+    </div> 
+    
 
+{% for comment in filter.qs %}
+    {% if comment.ad.user.user == user and comment.active == False %}
         <ul class="community-post-list">
             <li>
                 <div class="community-post">
                     <div class="post-content">
                         <p>{{ comment.text }}</p>
-                        <p>{{ comment.ad.user}}</p>
                         <div class="post-date text-end mt-3 pe-3">{{ comment.datetime }}</div>
                         <p class="text-end pe-3" style="color: #0dcaf0"><small class="text-white">Пользователь: </small>{{ comment.user }}</p>
+                            
+                                <a class="btn btn-outline-warning btn-sm mr-2 update_active" data-url="{% url 'update_comment_active' comment.id 'public' %}"  href="#">Принять</a>
+                                <a class="btn btn-outline-warning btn-sm update_active" data-url="{% url 'update_comment_active' comment.id 'delete' %}"  href="#">Удалить</a>
+                            
                     </div>
                 </div>
             </li>
         </ul>
-
+    {% endif %} 
 {% endfor %}
 </div>
 </div>
 </section>
+{% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+{% block js %}
+
+<script>
+$('body').on('click','.update_active', function(event){
+    event.preventDefault();
+    if (confirm('Вы уверены? ')){
+        var url = $(this).attr('data-url')
+        var tag = $(this).parent()
+        
+        $.ajax({
+            url:url,
+            type: 'GET',
+            success: function(response){
+                tag.html(response)
+                console.log(response)
+                
+            }
+    })
+    }
+    
+})
+</script>
+
 {% endblock %}
