@@ -157,6 +157,18 @@ ol {
 	color: #131313;
 }
 
+.site-btn a {
+	color: #131313;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: 0.3s;
+}
+
+.site-btn a:hover {
+	color: #131313;
+	border-color: #131313;
+}
+
 .cata {
 	display: inline-block;
 	text-transform: uppercase;
@@ -260,25 +272,28 @@ ol {
 .site-logo {
 	/* float: left; */
 	display: inline-block;
-	padding-top: 6px;
 }
 
 .user-panel {
 	float: right;
 	font-weight: 500;
 	background: #ffb320;
-	padding: 8px 28px;
+	padding: 11px 28px 14px;
+	
 	border-radius: 30px;
 }
 
 .user-panel a {
 	font-size: 14px;
 	color: #131313;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: 0.3s;
 }
 .user-panel a:hover {
-text-decoration: none;
 color: #131313;
-transition: all 0.3s ease-in-out;
+border-color: #131313;
+
 }
 
 .main-menu {
@@ -287,6 +302,7 @@ transition: all 0.3s ease-in-out;
 }
 
 .main-menu ul {
+	margin: 0;
 	list-style: none;
 }
 
@@ -798,16 +814,16 @@ transition: all 0.3s ease-in-out;
 	overflow: hidden;
 }
 
-.top-comment .tc-item .tc-thumb {
+/* .top-comment .tc-item .tc-thumb {
 	width: 63px;
 	height: 63px;
 	border-radius: 50%;
 	float: left;
-}
+} */
 
-.top-comment .tc-item .tc-content {
+/* .top-comment .tc-item .tc-content {
 	padding-left: 100px;
-}
+} */
 
 .top-comment .tc-item .tc-content p {
 	font-size: 12px;
@@ -861,6 +877,22 @@ transition: all 0.3s ease-in-out;
 	font-weight: 500;
 	color: #aeaeae;
 }
+.footer .copyright {
+    padding: 25px 0;
+    font-size: 15px;
+    border-top: 10px solid rgba(256, 256, 256, .1);
+}
+
+.footer .copyright a {
+    color: var(--secondary);
+}
+
+.footer .copyright a:hover {
+    color: #FFFFFF;
+}
+
+
+
 
 /*------------------
   Other Pages
@@ -941,11 +973,12 @@ transition: all 0.3s ease-in-out;
 
 .widget-item .widget-title {
 	margin-bottom: 40px;
+	color: #eff2f5;
 }
 
 .widget-item .latest-blog .lb-item .lb-content p,
 .widget-item .top-comment .tc-item .tc-content p {
-	color: #131313;
+	color: #fff;
 }
 
 .widget-item .latest-blog .lb-item .lb-content .lb-author {
@@ -1323,9 +1356,9 @@ transition: all 0.3s ease-in-out;
 	.main-menu ul li a {
 		margin-left: 15px;
 	}
-	.user-panel {
+	/* .user-panel {
 		padding: 15px 15px;
-	}
+	} */
 	.hero-slider .hs-text h2 {
 		font-size: 50px;
 	}
@@ -1363,6 +1396,7 @@ transition: all 0.3s ease-in-out;
 	.footer-top-bg {
 		display: none;
 	}
+	
 }
 
 /* Large Mobile :480px. */
@@ -1456,6 +1490,9 @@ transition: all 0.3s ease-in-out;
 	}
 	.page-info-section .pi-content h2 {
 		font-size: 50px;
+	}
+	.input-email {
+		margin:0 auto;
 	}
 }
 

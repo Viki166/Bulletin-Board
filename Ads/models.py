@@ -62,7 +62,7 @@ class Comment(models.Model):
     ad = models.ForeignKey('Ad', on_delete=models.CASCADE, verbose_name='Объявление')
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     active = models.BooleanField("Видимость статьи", default=False)
-    like = models.ManyToManyField(Users,blank=True, related_name ='comment_likes')
+    like = models.ManyToManyField(Users, blank=True, related_name ='comment_likes')
     dislike = models.ManyToManyField(Users, blank=True, related_name='comment_dislikes')
 
 

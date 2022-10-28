@@ -1,0 +1,26 @@
+{% extends 'flatpages/base.html' %}
+
+
+<section class="page-section single-blog-page spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog-thumb set-bg" data-setbg="img/recent-game/big.jpg">
+                    <div class="cata new">new</div>
+                    <div class="rgi-extra">
+                        <div class="rgi-star"><img src="img/icons/star.png" alt=""></div>
+                        <div class="rgi-heart"><img src="img/icons/heart.png" alt=""></div>
+                    </div>
+                </div>
+                <div class="blog-content">
+                    <h3>{{ news.header }}</h3>
+                    <!-- <a href="" class="meta-comment">3 comment</a> -->
+                    <p>{{ news.text }}</p>
+                    <p>{{ news.dete }} </p>
+                    <p>{{ news.user }}</p>
+                    <p>{{ news.category }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

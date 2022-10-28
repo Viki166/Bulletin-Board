@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', AdsListView.as_view(), name='ads'),
+    # path('celery-test/',index, name='celery_test_url'),
     path('<int:pk>/', DetailAd.as_view(), name='ad_detail'),
     path('comments/', Comments.as_view(), name = 'comments'),
     path('create/', AdCreate.as_view(), name='ad_create'),
@@ -17,3 +18,4 @@ urlpatterns = [
     # path('login/', LoginView.as_view(template_name='sign/login.html'), name='login'),
     # path('logout/', LogoutView.as_view(template_name='sign/logout.html'), name='logout'),
 ]
+ 

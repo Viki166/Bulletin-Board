@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'Ads.apps.AdsConfig',                # https://docs.djangoproject.com/en/4.0/ref/applications/#application-configuration
-    'News.apps.NewsConfig',
     'allauth',                           # https://django-allauth.readthedocs.io/en/latest/installation.html
     'allauth.account',
     'allauth.socialaccount',
@@ -111,6 +110,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        
     }
 }
 
@@ -213,6 +213,17 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 #django-channels
 ASGI_APPLICATION = "BulletinBoard.asgi.application"
 CHANNEL_LAYERS={}
+
+# redis
+# REDIS_HOST = '0.0.0.0'
+# REDIS_PORT = '6379'
+
+# celery
+CELERY_BROKER_URL = 'redis://localhost:6379' 
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 
 # django-ckeditor

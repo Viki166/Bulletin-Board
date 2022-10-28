@@ -43,7 +43,7 @@
 
  <div class="site-pagination sp-style-2">
     {% if page_obj.has_previous %}
-    <a class="link" href="?page=1">Первая</a>
+    <a class="link" href="?page=1">1</a>
     <a href="?page={{ page_obj.previous_page_number }}"><</a>
       {% endif %}
       {% for num in page_obj.paginator.page_range %}
@@ -56,7 +56,7 @@
    
     {% if page_obj.has_next %}
         <a href="?page={{  page_obj.next_page_number }}">></a>
-        <a class="link link-end" href="?page={{  page_obj.paginator.num_pages }}">Последняя</a>
+        <a class="link link-end" href="?page={{  page_obj.paginator.num_pages }}">{{  page_obj.paginator.num_pages }}</a>
     {% endif %}
  </div>
 

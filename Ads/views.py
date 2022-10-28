@@ -181,3 +181,12 @@ def GameList(request, game):
     list = Game.objects.filter(name=game)
     Ads = Ad.objects.filter(game=game)
     return render(request, 'ads/game.html',{'list': list, 'Ads':Ads})
+
+
+# from Ads.tasks import my_first_task
+
+# def index(request):
+#     my_first_task.delay(10)
+#     print('is this True!!!')
+#     return HttpResponse('response done')
+

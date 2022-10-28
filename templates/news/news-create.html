@@ -1,17 +1,16 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'flatpages/base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block title %}Create Ad{% endblock title %}
+{% block title %}Создать Новость{% endblock title %}
 {% block content %}
-<section class="page-section community-page set-bg " data-setbg="{% static 'img/pict.jpg' %}">
+<section class="page-section single-blog-page spad">
     <div class="community-warp ">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 mt-4  mb-5">
+            <div class="row">
+                <div class="col-lg-8">
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        {{ form.media }}
                         <button type="submit" class="btn btn-outline-dark mt-2">Сохранить</button>
                     </form>
                 </div>
@@ -20,4 +19,3 @@
     </div>
 </section>
 {% endblock content %}
-
