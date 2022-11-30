@@ -1,4 +1,6 @@
 {% extends 'flatpages/base.html' %}
+{% block title %}Новости{% endblock %}
+{% block content %}
 
 {% for news in all_news %}
 <section class="page-section recent-game-page spad">
@@ -29,3 +31,4 @@
 </section>
                     
 {% endfor %}
+{% endblock content %}

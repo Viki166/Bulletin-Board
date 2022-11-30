@@ -13,7 +13,7 @@
         {% autoescape off %}
             {% user_display user as user_display %}\
                 {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
-                    <h1>Спасибо за регистрацию!</h1>
+                    <h2>Спасибо за регистрацию!</h2>
                     <h3>Нажмите пожалуйста на <a href="{{ activate_url }}">эту ссылку</a> для активации вашей учетной записи.</h3>
                 {% endblocktrans %}
         {% endautoescape %}

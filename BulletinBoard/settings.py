@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'News.apps.NewsConfig',
     'Ads.apps.AdsConfig',                # https://docs.djangoproject.com/en/4.0/ref/applications/#application-configuration
     'allauth',                           # https://django-allauth.readthedocs.io/en/latest/installation.html
     'allauth.account',
@@ -200,7 +201,7 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" 
-
+MANAGERS = [('vika49661@mail.ru','vika49661@mail.ru')]
 
 #crispy-forms   https://django-crispy-forms.readthedocs.io/en/latest/
 # CRISPY_TEMPLATE_PCK = 'uni_form'

@@ -71,7 +71,7 @@
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-light  mb-4">Меню</h5>
                 <a class="btn btn-link" href="{% url 'ads' %}">Объявления</a>
-                <a class="btn btn-link" href="#">Новости</a>
+                <a class="btn btn-link" href="{% url 'news' %}">Новости</a>
                 <a class="btn btn-link" href="#">Игры</a>
                 <a class="btn btn-link" href="">Книги</a>
                 {% if user.is_authenticated %}

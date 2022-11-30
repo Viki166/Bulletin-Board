@@ -1,5 +1,5 @@
 from .models import Ad, Comment
-from django.forms import ModelForm, Textarea, Select
+from django.forms import ModelForm
 from django import forms
 
 

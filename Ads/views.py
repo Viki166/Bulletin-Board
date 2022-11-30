@@ -9,6 +9,7 @@ from django.views.generic.edit import FormMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, Template
 
+
 class AdsListView(ListView):
     model = Ad
     template_name = "ads/ads.html"
@@ -16,18 +17,19 @@ class AdsListView(ListView):
     queryset = Ad.objects.all().order_by('-id')
     ordering = ['-id']
     paginate_by = 3
-    
+ 
+  
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['games'] = Game.objects.all()
         context['form'] = AdForm
         return context
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-        return super().get(request, *args, **kwargs)
+    # def post(self, request, *args, **kwargs):
+    #     form = self.form_class(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     return super().get(request, *args, **kwargs)
     
 
 class DetailAd(FormMixin, DetailView):
@@ -44,32 +46,35 @@ class DetailAd(FormMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         form = CommentForm(request.POST)
+       
         if form.is_valid():
             ad = self.get_object()
             form.instance.ad = ad
-            form.instance.user = Users.objects.get(user=request.user)
+            form.instance.user = Users.objects.get(user=User.objects.get(username=request.user.username))
             form.save()
+            
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('ad_detail',kwargs={'pk':self.get_object().id})
+        return reverse_lazy('ad_detail',kwargs={'pk':self.get_object().pk})
 
 
 
 class AdCreate(CreateView):
     model = Ad
     form_class = AdForm
-    template_name = 'ads/ad_create.html'
-    
+    template_name = 'ads/ad_create.html'  
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = AdForm
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):         
+        if not(Users.objects.filter(user=request.user)):
+            Users.objects.create(user=request.user) 
         form = AdForm(request.POST)
         if form.is_valid():
             form.instance.user = Users.objects.get(user=request.user)
@@ -134,23 +139,24 @@ class AddCommentLike(View):
     def post(self,request, pk, *args, **kwargs):
         comment = Comment.objects.get(pk=pk)
         is_dislike = False
-        for dislike in comment.dislikes.all():
+        is_like = True
+        for dislike in comment.dislike.all():
            
             if dislike == request.user:
                
                 is_dislike= True
                 break
         if is_dislike:
-            comment.dislikes.remove(request.user.id)
+            comment.dislike.remove(request.user.id)
             is_dislike = False
-        for like in comment.likes.all():
+        for like in comment.like.all():
             if like == request.user:
                 is_like = True
                 break
         if not is_like:
-            comment.likes.add(request.user)
+            comment.like.add(request.user)
         if is_like:
-            comment.likes.remove(request.user)
+            comment.like.remove(request.user)
            
         return HttpResponseRedirect('ads')
         
@@ -159,21 +165,22 @@ class AddCommentDislike(View):
     def post(self,request, pk,*args, **kwargs):
         comment = Comment.objects.get(pk=pk)
         is_like = False
-        for like in comment.likes.all():
+        is_dislike = True
+        for like in comment.like.all():
             if like == request.user:
                 is_like= True
                 break
         if is_like:
-            comment.likes.remove(request.user)
+            comment.like.remove(request.user)
             is_dislike = False
-        for dislike in comment.dislikes.all():
+        for dislike in comment.dislike.all():
             if dislike == request.user:
                 is_dislike = True
                 break
         if not is_dislike:
-            comment.dislikes.add(request.user)
+            comment.dislike.add(request.user)
         if is_like:
-            comment.dislikes.remove(request.user)
+            comment.dislike.remove(request.user)
         return HttpResponseRedirect('ads')
     
 
